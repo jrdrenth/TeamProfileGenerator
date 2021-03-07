@@ -9,8 +9,8 @@ describe('Employee', () => {
   // Create new object to test with
   const employee = new Employee(testId, testName, testEmail);
 
-  describe('Instantiation', () => {
-    it('should instantiate Employee instance and set properties with arguments passed in', () => {
+  describe('Constructor', () => {
+    it('should instantiate Employee object and set properties via passed in arguments', () => {
       expect(typeof(employee)).toBe('object');
 
       // Verify that the new object has the correct property values assigned

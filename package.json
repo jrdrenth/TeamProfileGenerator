@@ -1,0 +1,27 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^26.6.3"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest --verbose test/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrdrenth/TeamProfileGenerator.git"
+  },
+  "author": "John Drenth",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jrdrenth/TeamProfileGenerator/issues"
+  },
+  "homepage": "https://github.com/jrdrenth/TeamProfileGenerator#readme"
+}

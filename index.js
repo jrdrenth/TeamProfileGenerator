@@ -1,18 +1,19 @@
 const fs = require('fs');
+const path = require('path');
 const inquirer = require('inquirer');
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
-//const generateMarkdown = require('./utils/generateMarkdown');
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+const generateHtml = require('./src/generateHtml');
 
 const employees = [];
 const ids = [];
 
 // array of common inquiries for user
 const commonQuestions = [{
-    name: "id",
-    type: "input",
-    message: "Id:",
+    name: 'id',
+    type: 'input',
+    message: 'Id:',
     validate: userInput => {
       var validationResult = true;
       
@@ -28,9 +29,9 @@ const commonQuestions = [{
       return validationResult;
     }
   }, {
-    name: "name",
-    type: "input",
-    message: "Name:",
+    name: 'name',
+    type: 'input',
+    message: 'Name:',
     validate: userInput => {
       var validationResult = 'Please enter at least one character.';
       
@@ -42,8 +43,8 @@ const commonQuestions = [{
       return validationResult;
     }
   }, {
-    name: "email",
-    type: "input",
+    name: 'email',
+    type: 'input',
     message: 'Email Address:',
     validate: userInput => {
       var validationResult = 'Please enter a valid email address.';
@@ -59,9 +60,9 @@ const commonQuestions = [{
 ];
 
 const officeQuestion = {
-  name: "officeNumber",
-  type: "input",
-  message: "Office Number:",
+  name: 'officeNumber',
+  type: 'input',
+  message: 'Office Number:',
   validate: userInput => {
     var validationResult = 'Please enter a number greater than zero.';
 
@@ -75,9 +76,9 @@ const officeQuestion = {
 };
 
 const githubQuestion = {
-  name: "github",
-  type: "input",
-  message: "Github User Name:",
+  name: 'github',
+  type: 'input',
+  message: 'Github User Name:',
   validate: userInput => {
     var validationResult = 'Please enter at least one character.';
       
@@ -91,9 +92,9 @@ const githubQuestion = {
 };
 
 const schoolQuestion = {
-  name: "school",
-  type: "input",
-  message: "School:",
+  name: 'school',
+  type: 'input',
+  message: 'School:',
   validate: userInput => {
     var validationResult = 'Please enter at least one character.';
       
@@ -168,9 +169,9 @@ function main() {
 
     let userInput = await inquirer.prompt([
     {
-      name: "employeeType",
-      type: "list",
-      message: "What type of employee would you like to add next to the team?",
+      name: 'employeeType',
+      type: 'list',
+      message: 'What type of employee would you like to add next to the team?',
       choices: [engineerStr, internStr, 'None, team is completed']
     }]);
   
@@ -187,15 +188,21 @@ function main() {
   }
 
   function generateRoster() {
-    // Create the output directory if the output path doesn't exist
+    const OUTPUT_DIR = path.resolve(__dirname, 'dist')
+    const outputPath = path.join(OUTPUT_DIR, 'teamProfile.html');
+
     // if (!fs.existsSync(OUTPUT_DIR)) {
     //   fs.mkdirSync(OUTPUT_DIR)
     // }
 
     // ---generate HTML HERE ------
-    var htmlContent = JSON.stringify(employees);
-    console.log(htmlContent);
-    writeToFile('teamRoster.json', htmlContent);
+    const htmlContent = generateHtml(employees);
+    fs.writeFileSync(outputPath, htmlContent, 'utf-8');
+
+    // ---generate JSON HERE ------
+    // const jsonContent = JSON.stringify(employees, null, 2);
+    // console.log(jsonContent);
+    // writeToFile('teamRoster.json', jsonContent);
   }
 
   async function createTeam() {
